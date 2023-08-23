@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const todos = require('./routes/todos.routes');
+const auth = require('./routes/auth.routes');
 const connectDB = require('./database/connect');
 require('dotenv').config();
 
@@ -10,6 +11,7 @@ const port = 3001;
 app.use(cors());
 app.use(express.json());
 
+app.use('/api/v1/auth', auth);
 app.use('/api/v1/todos', todos);
 
 const start = async () => {
