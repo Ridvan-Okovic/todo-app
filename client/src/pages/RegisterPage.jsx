@@ -1,24 +1,31 @@
 import axios from 'axios';
 import { useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const RegisterPage = () => {
+  const navigate = useNavigate();
   const name = useRef();
   const email = useRef();
   const password = useRef();
 
-  console.log(name.current.value);
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
       const user = await axios.post(
         `http://localhost:3001/api/v1/auth/register`,
         {
-          name: 'Ricko',
-          email: 'ricko@gmail.com',
-          password: 'secret',
+          name: name.current.value,
+          email: email.current.value,
+          password: password.current.value,
         }
       );
+
+      if (user.status === 201) {
+        localStorage.setItem('token', user.data.token);
+        localStorage.setItem('username', user.data.user.name);
+        navigate('/todos');
+      }
+      console.log(user);
     } catch (error) {
       console.log(error);
     }
