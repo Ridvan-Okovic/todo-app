@@ -24,7 +24,13 @@ When a todo is no longer needed, users can remove it from the list by clicking o
 
 #### There are several possible improvements for the Todo Tracker Web App:
 
-<b>User authentication:</b> Implement user registration and login functionality to allow users to have personalized todo lists. <br />
+<s><b>User authentication:</b> Implement user registration and login functionality to allow users to have personalized todo lists. </s> <br />
 <b>Filter and sorting options:</b> Enable users to filter and sort their todos based on criteria such as due date, priority, or completion status. <br />
 <b>Reminders and notifications:</b> Integrate a notification system to remind users of upcoming deadlines or tasks that require immediate attention. <br />
 <b>Collaboration features:</b> Implement features to allow users to share and collaborate on tasks with others, enabling teamwork and coordination. <br />
+
+![My Image](images/landing_todo.png)
+![My Image](images/login_todo.png)
+![My Image](images/register_todo.png)
+![My Image](images/todos.png)
+![My Image](images/edit_todo.png)
