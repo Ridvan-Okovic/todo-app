@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import axios from 'axios';
 
-const token = localStorage.getItem('token');
-
 const TodoForm = ({ setTodos }) => {
+  const token = localStorage.getItem('token');
   const [todo, setTodo] = useState('');
 
   const todoChangeHandler = (e) => {

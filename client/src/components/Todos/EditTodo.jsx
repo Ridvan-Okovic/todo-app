@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 const EditTodo = () => {
   const token = localStorage.getItem('token');
+  const [loading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { todo } = useContext(EditContext);
   const [editedTodo, setEditedTodo] = useState(todo.name);
@@ -21,6 +22,7 @@ const EditTodo = () => {
   const updateTodo = async (e) => {
     e.preventDefault();
     try {
+      setIsLoading(true);
       const newTodo = await axios.patch(
         `${import.meta.env.VITE_API_URI}/${todo.id}`,
         {
@@ -34,8 +36,12 @@ const EditTodo = () => {
         }
       );
 
-      navigate('/todos');
+      if (newTodo.status === 200) {
+        setIsLoading(false);
+        navigate('/todos');
+      }
     } catch (error) {
+      setIsLoading(false);
       console.log(error);
     }
   };
@@ -67,7 +73,7 @@ const EditTodo = () => {
           />
         </div>
         <button type="submit" className="bg-orange-500 rounded-md py-1">
-          Submit
+          {loading ? 'Updating todo...' : 'Submit'}
         </button>
       </form>
     </div>

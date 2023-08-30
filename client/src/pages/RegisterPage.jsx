@@ -1,8 +1,9 @@
 import axios from 'axios';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 const RegisterPage = () => {
+  const [loading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const name = useRef();
   const email = useRef();
@@ -11,6 +12,7 @@ const RegisterPage = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
+      setIsLoading(true);
       const user = await axios.post(
         `http://localhost:3001/api/v1/auth/register`,
         {
@@ -23,10 +25,11 @@ const RegisterPage = () => {
       if (user.status === 201) {
         localStorage.setItem('token', user.data.token);
         localStorage.setItem('username', user.data.user.name);
+        setIsLoading(false);
         navigate('/todos');
       }
-      console.log(user);
     } catch (error) {
+      setIsLoading(false);
       console.log(error);
     }
   };
@@ -70,7 +73,7 @@ const RegisterPage = () => {
             />
           </div>
           <button className="w-full bg-orange-500 rounded-md py-[2px]">
-            Submit
+            {loading ? 'Creating user...' : 'Submit'}
           </button>
           <p className="text-center">
             Already a member?{' '}

@@ -1,8 +1,9 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import axios from 'axios';
 
 const LogInPage = () => {
+  const [loading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const email = useRef();
   const password = useRef();
@@ -10,6 +11,7 @@ const LogInPage = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
+      setIsLoading(true);
       const user = await axios.post(`http://localhost:3001/api/v1/auth/login`, {
         email: email.current.value,
         password: password.current.value,
@@ -18,9 +20,11 @@ const LogInPage = () => {
       if (user.status === 200) {
         localStorage.setItem('token', user.data.token);
         localStorage.setItem('username', user.data.user.name);
+        setIsLoading(false);
         navigate('/todos');
       }
     } catch (error) {
+      setIsLoading(false);
       console.log(error);
     }
   };
@@ -55,7 +59,7 @@ const LogInPage = () => {
             />
           </div>
           <button className="w-full bg-orange-500 rounded-md py-[2px]">
-            Submit
+            {loading ? 'Fetching user...' : 'Submit'}
           </button>
           <p className="text-center">
             Not a member yet?{' '}
